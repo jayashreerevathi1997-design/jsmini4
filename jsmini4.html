@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Mini Projects</title>
+    <link rel="stylesheet" href="jsmini4.css">
+</head>
+<body>
+    <h1>JavaScript Mini Projects</h1>
+
+    <!-- Mini Project 1: Multiplication Table Generator -->
+    <div class="project">
+        <h2>1. Multiplication Table Generator</h2>
+        <label for="num1">Enter a number: </label>
+        <input type="number" id="num1" placeholder="e.g. 5">
+        <button onclick="generateTable()">Generate</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <!-- Mini Project 2: Sum of Digits -->
+    <div class="project">
+        <h2>2. Sum of Digits of a Number</h2>
+        <label for="num2">Enter a positive number: </label>
+        <input type="number" id="num2" placeholder="e.g. 1234" min="0">
+        <button onclick="calculateSum()">Calculate</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <!-- Mini Project 3: Multiples of a Number Finder -->
+    <div class="project">
+        <h2>3. Multiples of a Number Finder</h2>
+        <label for="num3">Enter a number: </label>
+        <input type="number" id="num3" placeholder="e.g. 7" min="1">
+        <button onclick="findMultiples()">Find Multiples</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <!-- Mini Project 4: Pattern Generator -->
+    <div class="project">
+        <h2>4. Pattern Generator</h2>
+        <label for="num4">Enter number of rows: </label>
+        <input type="number" id="num4" placeholder="e.g. 5" min="1" max="10">
+        <button onclick="generatePattern()">Generate Pattern</button>
+        <div id="result4" class="result pattern"></div>
+    </div>
+
+    <!-- Mini Project 5: ATM Cash Withdrawal System -->
+    <div class="project">
+        <h2>5. ATM Cash Withdrawal System</h2>
+        <p>Account Balance: <strong id="balance">10000</strong></p>
+        <label for="num5">Enter withdrawal amount: </label>
+        <input type="number" id="num5" placeholder="e.g. 500" min="100" step="100">
+        <button onclick="withdrawCash()">Withdraw</button>
+        <div id="result5" class="result"></div>
+    </div>
+
+    <!-- Mini Project 6: Shopping Cart System -->
+    <div class="project">
+        <h2>6. Shopping Cart System</h2>
+        <div class="cart-input">
+            <label for="itemName">Item Name: </label>
+            <input type="text" id="itemName" placeholder="e.g. Apple">
+            <label for="itemPrice">Price: </label>
+            <input type="number" id="itemPrice" placeholder="e.g. 50" min="1">
+            <button onclick="addItem()">Add Item</button>
+        </div>
+        <div id="cartItems" class="result"></div>
+        <div id="cartTotal" class="cart-total"></div>
+    </div>
+
+    <script>
+        // ATM Balance
+        let accountBalance = 10000;
+
+        // Shopping Cart
+        let cart = [];
+        // Mini Project 1: Multiplication Table Generator
+        function generateTable() {
+            const num = parseInt(document.getElementById('num1').value);
+            const resultDiv = document.getElementById('result1');
+
+            if (isNaN(num)) {
+                resultDiv.innerHTML = 'Please enter a valid number.';
+                return;
+            }
+
+            let output = `<h3>Multiplication Table for ${num}</h3>`;
+
+            for (let i = 1; i <= 10; i++) {
+                const result = num * i;
+                output += `${num} x ${i} = ${result}<br>`;
+            }
+
+            resultDiv.innerHTML = output;
+        }
+
+        // Mini Project 2: Sum of Digits
+        function calculateSum() {
+            let num = parseInt(document.getElementById('num2').value);
+            const resultDiv = document.getElementById('result2');
+
+            if (isNaN(num) || num < 0) {
+                resultDiv.innerHTML = 'Please enter a valid positive number.';
+                return;
+            }
+
+            const originalNum = num;
+            let sum = 0;
+
+            while (num > 0) {
+                let digit = num % 10;
+                sum += digit;
+                num = Math.floor(num / 10);
+            }
+
+            resultDiv.innerHTML = `The sum of digits of ${originalNum} is: <strong>${sum}</strong>`;
+        }
+
+        // Mini Project 3: Multiples of a Number Finder
+        function findMultiples() {
+            const num = parseInt(document.getElementById('num3').value);
+            const resultDiv = document.getElementById('result3');
+
+            if (isNaN(num) || num <= 0) {
+                resultDiv.innerHTML = 'Please enter a valid positive number.';
+                return;
+            }
+
+            let multiples = [];
+
+            for (let i = num; i <= 100; i += num) {
+                multiples.push(i);
+            }
+
+            if (multiples.length > 0) {
+                resultDiv.innerHTML = `<strong>Multiples of ${num} (1 to 100):</strong><br>${multiples.join(', ')}`;
+            } else {
+                resultDiv.innerHTML = 'No multiples found in the range 1-100.';
+            }
+        }
+
+        // Mini Project 4: Pattern Generator
+        function generatePattern() {
+            const rows = parseInt(document.getElementById('num4').value);
+            const resultDiv = document.getElementById('result4');
+
+            if (isNaN(rows) || rows <= 0 || rows > 10) {
+                resultDiv.innerHTML = 'Please enter a number between 1 and 10.';
+                return;
+            }
+
+            let output = '<strong>Star Triangle Pattern:</strong><br>';
+
+            for (let i = 1; i <= rows; i++) {
+                let stars = '';
+                for (let j = 1; j <= i; j++) {
+                    stars += '* ';
+                }
+                output += stars + '<br>';
+            }
+
+            resultDiv.innerHTML = output;
+        }
+
+        // Mini Project 5: ATM Cash Withdrawal System
+        function withdrawCash() {
+            const amount = parseInt(document.getElementById('num5').value);
+            const resultDiv = document.getElementById('result5');
+            const balanceDiv = document.getElementById('balance');
+
+            if (isNaN(amount) || amount <= 0) {
+                resultDiv.innerHTML = 'Please enter a valid amount.';
+                return;
+            }
+
+            if (amount % 100 !== 0) {
+                resultDiv.innerHTML = 'Amount must be a multiple of 100.';
+                return;
+            }
+
+            if (amount > accountBalance) {
+                resultDiv.innerHTML = 'Insufficient balance!';
+                return;
+            }
+
+            accountBalance -= amount;
+            balanceDiv.textContent = accountBalance;
+            resultDiv.innerHTML = `<strong>Withdrawal successful!</strong><br>
+                Amount withdrawn: ${amount}<br>
+                Remaining balance: ${accountBalance}`;
+        }
+
+        // Mini Project 6: Shopping Cart System
+        function addItem() {
+            const name = document.getElementById('itemName').value.trim();
+            const price = parseFloat(document.getElementById('itemPrice').value);
+
+            if (!name) {
+                alert('Please enter an item name.');
+                return;
+            }
+
+            if (isNaN(price) || price <= 0) {
+                alert('Please enter a valid price.');
+                return;
+            }
+
+            cart.push({ name: name, price: price });
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            displayCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            displayCart();
+        }
+
+        function displayCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p>Cart is empty.</p>';
+                cartTotalDiv.innerHTML = '';
+                return;
+            }
+
+            let output = '<strong>Cart Items:</strong><ul>';
+            let total = 0;
+
+            for (let i = 0; i < cart.length; i++) {
+                output += `<li>${cart[i].name} - ${cart[i].price}
+                    <button onclick="removeItem(${i})">Remove</button></li>`;
+                total += cart[i].price;
+            }
+
+            output += '</ul>';
+            cartItemsDiv.innerHTML = output;
+            cartTotalDiv.innerHTML = `<strong>Total: ${total}</strong>`;
+        }
+    </script>
+</body>
+</html>
